@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router";
+import { AuthContext } from "../Provider/AuthProvider";
 
-const Login = () => {
+const Register = () => {
+  const { registerWithEmailPassword } = useContext(AuthContext);
   return (
     <div>
       <div className="hero bg-base-200 min-h-screen">
@@ -11,6 +13,12 @@ const Login = () => {
               <fieldset className="fieldset">
                 <label className="label">Email</label>
                 <input type="email" className="input" placeholder="Email" />
+                <label className="label">PhotoURL</label>
+                <input
+                  type="email"
+                  className="input"
+                  placeholder="Enter Your Photo URL"
+                />
                 <label className="label">Password</label>
                 <input
                   type="password"
@@ -21,12 +29,12 @@ const Login = () => {
                   <a className="link link-hover">Forgot password?</a>
                 </div>
                 <div>
-                  <span>Don't have an account?</span>{" "}
-                  <Link to={"/register"}>
-                    <span className="text-yellow-300">Register</span>
+                  <span>Already have an account? </span>
+                  <Link to={"/login"}>
+                    <span className="text-blue-300">Log In</span>
                   </Link>
                 </div>
-                <button className="btn btn-neutral mt-4">Login</button>
+                <button className="btn btn-neutral mt-4">Register</button>
               </fieldset>
             </div>
           </div>
@@ -36,4 +44,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
