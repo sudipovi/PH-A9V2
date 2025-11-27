@@ -1,12 +1,36 @@
-import React from "react";
+import { signInWithEmailAndPassword } from "firebase/auth/cordova";
+import React, { useContext } from "react";
 import { Link } from "react-router";
+import auth from "../firebase/firebase.config";
+import { AuthContext } from "../Provider/AuthProvider";
+import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
+  const { setUser, user, handleGoogleSignIn } = useContext(AuthContext);
   const handleSubmit = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const pass = e.target.password.value;
-    console.log(email, pass);
+
+    signInWithEmailAndPassword(auth, email, pass)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        setUser(user);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  console.log(user);
+
+  const googleSignin = () => {
+    handleGoogleSignIn()
+      .then((result) => {
+        const user = result.user;
+        setUser(user);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -23,7 +47,6 @@ const Login = () => {
                   className="input"
                   placeholder="Email"
                 />
-                <input type="email" className="input" placeholder="Email" />
                 <label className="label">Password</label>
                 <input
                   name="password"
@@ -34,6 +57,9 @@ const Login = () => {
                 <div>
                   <a className="link link-hover">Forgot password?</a>
                 </div>
+                <button onClick={googleSignin} className="btn">
+                  <FcGoogle />
+                </button>
                 <div>
                   <span>Don't have an account?</span>{" "}
                   <Link to={"/register"}>

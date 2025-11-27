@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { LuDog } from "react-icons/lu";
 import { Link } from "react-router";
+import { AuthContext } from "../Provider/AuthProvider";
+import { signOut } from "firebase/auth";
+import auth from "../firebase/firebase.config";
 
 const Navbar = () => {
+  const { user } = useContext(AuthContext);
+
+  const handleSignOut = () => {
+    signOut(auth);
+  };
+
   return (
     <div>
       <div className="navbar bg-base-100 shadow-sm">
@@ -53,15 +62,24 @@ const Navbar = () => {
               <Link to={"/services"}>Services</Link>
             </li>
             <li>
-              <a>My Profile</a>
+              <Link to={"/profile"}>My Profile</Link>
             </li>
           </ul>
         </div>
-        <div className="navbar-end">
-          <Link to={"/login"} className="btn">
-            Log In
-          </Link>
-        </div>
+        {user && (
+          <div className="navbar-end">
+            <btn onClick={handleSignOut} className="btn">
+              Log out
+            </btn>
+          </div>
+        )}
+        {!user && (
+          <div className="navbar-end">
+            <Link to={"/login"} className="btn">
+              Log In
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
