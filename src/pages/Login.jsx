@@ -6,7 +6,7 @@ import { AuthContext } from "../Provider/AuthProvider";
 import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
-  const { setUser, user, handleGoogleSignIn } = useContext(AuthContext);
+  const { setUser, handleGoogleSignIn } = useContext(AuthContext);
   const handleSubmit = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -21,8 +21,6 @@ const Login = () => {
         console.log(error);
       });
   };
-
-  console.log(user);
 
   const googleSignin = () => {
     handleGoogleSignIn()
@@ -55,7 +53,7 @@ const Login = () => {
                   placeholder="Password"
                 />
                 <div>
-                  <a className="link link-hover">Forgot password?</a>
+                  <a className="link link-hover">Forget password?</a>
                 </div>
                 <button onClick={googleSignin} className="btn">
                   <FcGoogle />
